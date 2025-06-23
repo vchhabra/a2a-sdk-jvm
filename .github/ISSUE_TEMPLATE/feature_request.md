@@ -1,12 +1,24 @@
-### Type of Change
-- [ ] Feature
+---
+name: Feature Request
+about: Suggest an idea for this project
+title: 'feat: A brief and clear title of the feature'
+labels: 'enhancement, needs-triage'
+assignees: ''
 
-### 1. Problem Statement / User Story
-### 2. Proposed Solution & Acceptance Criteria
-### 3. Definition of Done Checklist
-- [ ] All acceptance criteria are met.
-- [ ] The code is complete and follows all project code style standards.
-- [ ] New unit tests have been written to cover the changes, maintaining or increasing test coverage.
-- [ ] All existing and new tests pass successfully (`./gradlew build`).
-- [ ] Relevant documentation (e.g., Javadoc, README) has been updated.
-- [ ] The change is ready for architectural review.
+---
+
+## Is your feature request related to a problem?
+
+Please provide a clear and concise description of what the problem is. Ex. "I'm always frustrated when..."
+
+## Describe the Solution You'd Like
+
+A clear and concise description of what you want to happen.
+
+## Describe Alternatives You've Considered
+
+A clear and concise description of any alternative solutions or features you've considered.
+
+## Additional Context
+
+Add any other context or screenshots about the feature request here.

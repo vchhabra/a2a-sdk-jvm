@@ -1,26 +1,2 @@
-plugins {
-    `java-library`
-}
-
-group = "io.github.vchhabra"
-version = "0.0.1-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
-}
-
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
-}
-
+// The root build.gradle.kts is intentionally left empty.
+// All shared logic is now encapsulated in convention plugins inside 'buildSrc'.

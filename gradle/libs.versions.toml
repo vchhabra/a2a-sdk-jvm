@@ -1,0 +1,40 @@
+[versions]
+kotlin = "2.0.21"
+spring-boot = "3.3.1"
+junit = "5.10.3"
+detekt = "1.23.6"
+jacoco = "0.8.12"
+
+[libraries]
+# Spring Boot
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-boot-autoconfigure = { module = "org.springframework.boot:spring-boot-autoconfigure" }
+spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+# Gradle Plugins (as library dependencies for build-logic)
+gradle-plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradle-plugin-spring-boot = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
+gradle-plugin-kotlin-spring = { module = "org.jetbrains.kotlin.plugin.spring:org.jetbrains.kotlin.plugin.spring.gradle.plugin", version.ref = "kotlin" }
+detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+
+
+# JUnit (for testing our build logic)
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+
+
+[plugins]
+# Convention Plugins (version is "unspecified" because they are included builds)
+jvm-core-library-convention = { id = "jvm-core-library-convention", version = "unspecified" }
+jvm-spring-library-convention = { id = "jvm-spring-library-convention", version = "unspecified" }
+spring-boot-app-convention = { id = "spring-boot-app-convention", version = "unspecified" }
+ktlint-convention = { id = "ktlint-convention", version = "unspecified" }
+
+
+# External Plugins
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+jacoco = { id = "org.gradle.testing.jacoco", version.ref = "jacoco" }

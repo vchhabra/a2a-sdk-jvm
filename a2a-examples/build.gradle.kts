@@ -1,7 +1,7 @@
 plugins {
-    `java-library`
+    alias(libs.plugins.spring.boot.app.convention)
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+dependencies {
+    implementation(libs.spring.boot.starter.web)
 }

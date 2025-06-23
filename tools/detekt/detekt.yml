@@ -1,0 +1,38 @@
+build:
+  maxIssues: 0 # Strict: fail build on any issue
+  weights:
+    # customize weights of rule sets
+    complexity: 2
+    coroutines: 1
+    empty-blocks: 1
+    exceptions: 1
+    naming: 1
+    performance: 1
+    style: 1
+
+config:
+  validation: true
+  # override default values of rules
+  # (.e.g. "MaxLineLength:
+  #          maxLineLength: 120")
+
+processors:
+  active: true
+  exclude:
+    - 'build-logic/**'
+    - 'build-infra/**'
+
+console-reports:
+  active: true
+  exclude:
+    - 'DetektInfo'
+    - 'ProjectStatisticsReport'
+    - 'FileBasedFindingsReport'
+
+output-reports:
+  active: true
+  exclude:
+  # - 'HtmlOutputReport'
+  # - 'TxtOutputReport'
+  # - 'XmlOutputReport'
+  # - 'SarifOutputReport'

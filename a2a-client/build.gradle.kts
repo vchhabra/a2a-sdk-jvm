@@ -1,7 +1,11 @@
+import plugins.conventions.BuildConstants
+
 plugins {
-    `java-library`
+    // This module is part of the Spring ecosystem.
+    alias(libs.plugins.jvm.spring.library.convention)
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+dependencies {
+    implementation(project(BuildConstants.Modules.A2A_CORE))
+    implementation(libs.spring.boot.starter.web)
 }
