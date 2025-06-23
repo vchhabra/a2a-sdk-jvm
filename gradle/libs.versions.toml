@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.2.0"
 spring-boot = "3.5.3"
-junit = "5.10.3"
+junit = "5.13.1"
 detekt = "1.23.8"
 jacoco = "0.8.12"
 
