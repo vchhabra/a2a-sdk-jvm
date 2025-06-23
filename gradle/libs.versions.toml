@@ -2,7 +2,7 @@
 kotlin = "2.0.21"
 spring-boot = "3.5.3"
 junit = "5.10.3"
-detekt = "1.23.6"
+detekt = "1.23.8"
 jacoco = "0.8.12"
 
 [libraries]
