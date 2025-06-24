@@ -12,14 +12,14 @@ This project and everyone participating in it is governed by our [Code of Conduc
 
 ### Reporting Bugs
 
-- **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/vchhabra/a2a-sdk-jvm/issues).
-- If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/vchhabra/a2a-sdk-jvm/issues/new?assignees=&labels=bug%2C+needs-triage&template=bug_report.md&title=fix%3A+%5BBUG%5D+A+brief+and+clear+title+of+the+bug).
+- **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/vchhabra/a2a-jvm/issues).
+- If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/vchhabra/a2a-jvm/issues/new?assignees=&labels=bug%2C+needs-triage&template=bug_report.md&title=fix%3A+%5BBUG%5D+A+brief+and+clear+title+of+the+bug).
 - Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
 
 ### Suggesting Enhancements
 
-- **Ensure the enhancement was not already suggested** by searching on GitHub under [Issues](https://github.com/vchhabra/a2a-sdk-jvm/issues).
-- If you're unable to find an open issue, [open a new one](https://github.com/vchhabra/a2a-sdk-jvm/issues/new?assignees=&labels=enhancement%2C+needs-triage&template=feature_request.md&title=feat%3A+A+brief+and+clear+title+of+the+feature).
+- **Ensure the enhancement was not already suggested** by searching on GitHub under [Issues](https://github.com/vchhabra/a2a-jvm/issues).
+- If you're unable to find an open issue, [open a new one](https://github.com/vchhabra/a2a-jvm/issues/new?assignees=&labels=enhancement%2C+needs-triage&template=feature_request.md&title=feat%3A+A+brief+and+clear+title+of+the+feature).
 - Provide a clear and detailed explanation of the proposed enhancement, including why it would be beneficial to the project.
 
 ### Your First Code Contribution
@@ -42,8 +42,8 @@ Unsure where to begin? You can start by looking through `good-first-issue` and `
 ## Development Setup
 
 1.  Fork the repository.
-2.  Clone your fork: `git clone https://github.com/vchhabra/a2a-sdk-jvm.git`
-3.  Navigate to the project directory: `cd a2a-sdk-jvm`
+2.  Clone your fork: `git clone https://github.com/vchhabra/a2a-jvm.git`
+3.  Navigate to the project directory: `cd a2a-jvm`
 4.  Set up the commit message template: `git config commit.template .gitmessage`
 5.  Install dependencies and build the project: `./gradlew build`
 

@@ -1,0 +1,19 @@
+package io.github.vchhabra.a2a.jvm.core;
+
+import java.util.List;
+
+/**
+ * Represents the /.well-known/agent.json manifest file.
+ * It describes an agent's capabilities and how to interact with it.
+ *
+ * @param id The unique identifier for the agent.
+ * @param version The version of the agent specification.
+ * @param actions A list of actions (tools) this agent can perform.
+ * @param auth The authentication method required to interact with this agent.
+ */
+public record AgentCard(
+        String id,
+        String version,
+        List<Action> actions,
+        Auth auth
+) {}

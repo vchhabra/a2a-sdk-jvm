@@ -1,1 +1,1 @@
-# a2a-sdk-java
+# a2a-jvm
