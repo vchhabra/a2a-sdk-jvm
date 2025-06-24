@@ -22,9 +22,10 @@ includeBuild("build-infra")
 // This line enables the convention plugins from your build-logic directory
 includeBuild("build-logic")
 
-rootProject.name = "a2a-sdk-jvm"
-include("a2a-core")
-include("a2a-client")
-include("a2a-server")
-include("a2a-spring-boot-starter")
-include("a2a-examples")
+rootProject.name = "a2a-jvm"
+include("a2a-jvm-core")
+include("a2a-jvm-transport-jsonrpc")
+include("a2a-jvm-client")
+include("a2a-jvm-server")
+include("a2a-jvm-spring-boot-starter")
+include("a2a-jvm-examples")
