@@ -1,48 +1,49 @@
-name: CI - Build and Analyze
+# .github/workflows/ci.yml
+name: "CI - Application Build"
 
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - "build-infra/**"
+      - "build-logic/**"
+      - ".github/workflows/ci-build-tools.yml"
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - "build-infra/**"
+      - "build-logic/**"
+      - ".github/workflows/ci-build-tools.yml"
 
 jobs:
-  build:
+  build-application:
+    name: "Build and Test Application"
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
-      - name: Checkout repository
+      - name: "☁️ Checkout"
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: "🔧 Setup JDK"
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
-          # Caching is handled by the setup-java action in v4
-          cache: gradle
+          distribution: "temurin"
+          java-version: "17"
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3 # Note: v3 is the current stable version for this action
+      - name: "🔧 Setup Gradle"
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Build with Gradle
+      - name: "⚙️ Build and Test"
+        # The 'build' task will trigger 'test', 'detekt', and 'jacocoTestReport'
+        # because of how the convention plugins are set up.
         run: ./gradlew build
 
-      - name: Upload Detekt reports
+      - name: "📊 Upload Build Reports"
+        if: always() # This ensures reports are uploaded even if a step fails
         uses: actions/upload-artifact@v4
-        if: always() # Always run this step to upload reports even if the build fails
         with:
-          name: detekt-reports
-          path: '**/build/reports/detekt/detekt.*'
-
-      - name: Upload JaCoCo reports
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: jacoco-reports
-          path: '**/build/reports/jacoco/test/html/**'
+          name: build-reports
+          path: |
+            **/build/reports/tests/test/**
+            **/build/reports/detekt/**
+            **/build/reports/jacoco/test/**

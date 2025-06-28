@@ -1,3 +1,7 @@
+pluginManagement {
+    includeBuild("../build-infra")
+}
+
 // This allows the build-logic build to use the same version catalog
 // and repository definitions as the main build.
 @Suppress("UnstableApiUsage")

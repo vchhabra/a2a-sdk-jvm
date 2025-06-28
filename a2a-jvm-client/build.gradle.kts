@@ -1,7 +1,6 @@
 import plugins.conventions.BuildConstants
 
 plugins {
-    // This module is part of the Spring ecosystem.
     alias(libs.plugins.jvm.spring.library.convention)
 }
 
