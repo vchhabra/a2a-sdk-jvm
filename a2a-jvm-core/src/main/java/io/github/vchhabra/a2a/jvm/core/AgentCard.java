@@ -10,10 +10,12 @@ import java.util.List;
  * @param version The version of the agent specification.
  * @param actions A list of actions (tools) this agent can perform.
  * @param auth The authentication method required to interact with this agent.
+ * @param api The API definition for how to interact with the agent's tasks.
  */
 public record AgentCard(
         String id,
         String version,
         List<Action> actions,
-        Auth auth
+        Auth auth,
+        Api api
 ) {}

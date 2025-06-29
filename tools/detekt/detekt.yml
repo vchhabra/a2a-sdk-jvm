@@ -1,5 +1,7 @@
+# This configuration file centralizes all Detekt static analysis rules for the project.
+
 build:
-  maxIssues: 0 # Strict: fail build on any issue
+  maxIssues: 0 # Strict: fail the build on any issue
   weights:
     # customize weights of rule sets
     complexity: 2
@@ -18,9 +20,6 @@ config:
 
 processors:
   active: true
-  exclude:
-    - 'build-logic/**'
-    - 'build-infra/**'
 
 console-reports:
   active: true
@@ -31,8 +30,21 @@ console-reports:
 
 output-reports:
   active: true
-  exclude:
-  # - 'HtmlOutputReport'
-  # - 'TxtOutputReport'
-  # - 'XmlOutputReport'
-  # - 'SarifOutputReport'
+
+performance:
+  # The use of the spread operator (*) in a Spring Boot main function is idiomatic
+  # and required. We disable this rule globally to prevent false positives.
+  SpreadOperator:
+    active: false
+
+style:
+  # This default Detekt rule conflicts with the 'FinalNewline' rule from the
+  # 'detekt-formatting' plugin. We disable it to favor the auto-correctable version.
+  NewLineAtEndOfFile:
+    active: false
+
+formatting:
+  # This is the primary rule for ensuring files end with a newline. It is part of
+  # the 'detekt-formatting' ruleset, which can also autocorrect issues.
+  FinalNewline:
+    active: true
