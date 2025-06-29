@@ -1,34 +1,64 @@
-# .github/workflows/ci.yml
-name: "CI - Application Build"
+# This is the single, unified CI workflow for the entire a2a-jvm project.
+# It uses a multi-job strategy with path filtering to efficiently test
+# either the application code, the build tools, or both, depending on
+# what has changed in a pull request.
+name: "CI - Project Validation"
 
 on:
-  push:
-    branches: [ "main" ]
-    paths-ignore:
-      - "build-infra/**"
-      - "build-logic/**"
-      - ".github/workflows/ci-build-tools.yml"
   pull_request:
-    branches: [ "main" ]
-    paths-ignore:
-      - "build-infra/**"
-      - "build-logic/**"
-      - ".github/workflows/ci-build-tools.yml"
+    branches: ["main"]
+  push:
+    branches: ["main"]
 
 jobs:
-  build-application:
-    name: "Build and Test Application"
+  # Job 1: This lightweight job runs first on every PR to determine which
+  # major parts of the codebase have changed. Its outputs are used to
+  # conditionally trigger the downstream build jobs.
+  detect-changes:
+    name: "Detect Changed Paths"
     runs-on: ubuntu-latest
-
+    outputs:
+      run_app_build: ${{ steps.filter.outputs.app }}
+      run_tools_build: ${{ steps.filter.outputs.tools }}
+      run_all_builds: ${{ steps.filter.outputs.workflows }}
     steps:
       - name: "☁️ Checkout"
         uses: actions/checkout@v4
 
-      - name: "🔧 Setup JDK"
+      - name: "🔎 Filter changed paths"
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            # 'app' is true if any file outside the build tool directories has changed.
+            app:
+              - '!(build-logic/**)'
+              - '!(build-infra/**)'
+            # 'tools' is true if any file inside the build tool directories has changed.
+            tools:
+              - 'build-logic/**'
+              - 'build-infra/**'
+            # 'workflows' is true if any GitHub Actions workflow file has changed.
+            workflows:
+              - '.github/workflows/**'
+
+  # Job 2: Builds and tests the main application modules.
+  # This job only runs if application code changed OR if a workflow file was changed.
+  build-application:
+    name: "Build and Test - Application"
+    needs: detect-changes
+    if: needs.detect-changes.outputs.run_app_build == 'true' || needs.detect-changes.outputs.run_all_builds == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "☁️ Checkout"
+        uses: actions/checkout@v4
+
+      - name: "🔧 Setup JDK 17"
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: "17"
+          cache: gradle
 
       - name: "🔧 Setup Gradle"
         uses: gradle/actions/setup-gradle@v3
@@ -42,8 +72,60 @@ jobs:
         if: always() # This ensures reports are uploaded even if a step fails
         uses: actions/upload-artifact@v4
         with:
-          name: build-reports
+          name: application-build-reports
           path: |
             **/build/reports/tests/test/**
             **/build/reports/detekt/**
             **/build/reports/jacoco/test/**
+
+  # Job 3: Builds and tests the build-logic and build-infra modules.
+  # This job only runs if build tool code changed OR if a workflow file was changed.
+  build-tools:
+    name: "Build and Test - Build Tools"
+    needs: detect-changes
+    if: needs.detect-changes.outputs.run_tools_build == 'true' || needs.detect-changes.outputs.run_all_builds == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "☁️ Checkout"
+        uses: actions/checkout@v4
+
+      - name: "🔧 Setup JDK 17"
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: gradle
+
+      - name: "🔧 Setup Gradle"
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: "⚙️ Build and Test build-infra"
+        run: ./gradlew :build-infra:build
+
+      - name: "⚙️ Build and Test build-logic"
+        run: ./gradlew :build-logic:build
+
+  # Job 4: The Final Gatekeeper. This is the ONLY check you need in your branch protection rules.
+  # It waits for the build jobs to complete and provides a single, final status.
+  required-checks:
+    name: "Required Checks"
+    runs-on: ubuntu-latest
+    # This job must run after the others, regardless of their outcome.
+    needs: [build-application, build-tools]
+    if: always()
+    steps:
+      - name: "Evaluate outcomes of all dependent jobs"
+        run: |
+          # The 'needs' context is available as a JSON object. We will parse it.
+          results_json='${{ toJSON(needs.*.result) }}'
+          echo "Job results: $results_json"
+
+          # This jq script checks if the array contains ANY value that is NOT 'success' AND NOT 'skipped'.
+          # If a bad state ('failure', 'cancelled', 'timeout') is found, the 'if' condition is true and the job fails.
+          # This is a "default-deny" or "fail-closed" approach.
+          if echo "$results_json" | jq -e 'map(select(. != "success" and . != "skipped")) | length > 0'; then
+            echo "::error::A dependency job failed, was cancelled, or had an unexpected status."
+            exit 1
+          else
+            echo "All triggered jobs passed successfully."
+          fi
