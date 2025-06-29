@@ -1,4 +1,4 @@
-name: "CI - Build Logic"
+name: "CI - Build Tools"
 
 on:
   push:
@@ -15,8 +15,8 @@ on:
       - ".github/workflows/ci-build-tools.yml"
 
 jobs:
-  validate-build-logic:
-    name: "Validate Build Logic"
+  validate-build-tools:
+    name: "Validate Build Tools"
     runs-on: ubuntu-latest
 
     steps:
