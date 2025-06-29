@@ -1,6 +1,8 @@
-package io.github.vchhabra.a2a.jvm.core;
+package io.github.vchhabra.a2a.jvm.core.model;
 
 import java.util.List;
+
+import io.github.vchhabra.a2a.jvm.core.model.auth.AuthScheme;
 
 /**
  * Represents the /.well-known/agent.json manifest file.
@@ -16,6 +18,6 @@ public record AgentCard(
         String id,
         String version,
         List<Action> actions,
-        Auth auth,
+        AuthScheme auth,
         Api api
 ) {}

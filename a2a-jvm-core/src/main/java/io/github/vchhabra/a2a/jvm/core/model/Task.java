@@ -1,4 +1,6 @@
-package io.github.vchhabra.a2a.jvm.core;
+package io.github.vchhabra.a2a.jvm.core.model;
+
+import io.github.vchhabra.a2a.jvm.core.model.enums.TaskState;
 
 /**
  * Represents the state and result of a long-running, asynchronous task.
@@ -10,7 +12,7 @@ package io.github.vchhabra.a2a.jvm.core;
  */
 public record Task(
         String taskId,
-        String state,
+        TaskState state,
         Object result,
         Object error // Using Object to match JSON-RPC error structure
 ) {}

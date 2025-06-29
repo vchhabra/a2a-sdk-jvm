@@ -1,4 +1,4 @@
-package io.github.vchhabra.a2a.jvm.core;
+package io.github.vchhabra.a2a.jvm.core.model;
 
 import java.util.Map;
 
