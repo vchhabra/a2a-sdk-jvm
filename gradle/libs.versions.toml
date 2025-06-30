@@ -7,7 +7,7 @@ junit-jupiter = "5.13.1"
 # is pending until a stable, non-RC version is released that supports Kotlin 2.x.
 detekt = "1.23.8"
 jacoco = "0.8.12"
-gradle-doctor = "0.9.0"
+gradle-doctor = "0.11.0"
 
 [libraries]
 # Spring Boot
